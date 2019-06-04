@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/slopez-ubuntu/app/Workspace/prog_avanzadaUno-TP/TP/TP_PA1_FWK/mysql-connector-java-5.1.23-bin.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
