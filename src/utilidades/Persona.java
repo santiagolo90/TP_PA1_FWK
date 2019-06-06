@@ -2,10 +2,15 @@ package utilidades;
 
 public class Persona {
 	
-	public Integer id;
-	public String nombre;
-	public String apellido;
-	public Integer edad;
+	private Integer id;
+	private String nombre;
+	private String apellido;
+	private Integer edad;
+	
+	public Persona() {
+		super();
+
+	}
 	
 	
 	public Persona(Integer id, String nombre, String apellido, Integer edad) {

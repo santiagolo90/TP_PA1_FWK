@@ -1,5 +1,6 @@
 package utilidades;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -16,6 +17,9 @@ public class main {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ArrayList<Persona> personas = new ArrayList<>();
+		ArrayList<Field> atributos =  new ArrayList<Field>();
+		Persona p = new Persona();
+		
 		try {
 
 
@@ -28,11 +32,17 @@ public class main {
 			
 			ps = conn.prepareStatement("SELECT * FROM PERSONAS");
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
-				personas.add(new Persona(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4)));
+			//while(rs.next()){
+			//	personas.add(new Persona(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4)));
+			//}
+			//personas.stream().forEach(p -> System.out.println(p));
+			atributos = UBean.obtenerAtributos(p);
+			for(Field f: atributos ){
+				
+				System.out.println("Atributo for: "+f.getName());//solo el atributo
+				System.out.println("tipo for: "+ f.getType());// de que tipo es el atributo
 			}
-			personas.stream().forEach(p -> System.out.println(p));
-		
+
 			
 		} catch (Exception e) {
 			// TODO: handle exception
