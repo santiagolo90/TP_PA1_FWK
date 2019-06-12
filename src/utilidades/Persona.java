@@ -1,10 +1,16 @@
 package utilidades;
+import anotaciones.*;
 
+@Tabla(nombre = "Persona")
 public class Persona {
 	
+	@Id
 	private Integer id;
+	@Columna(nombre = "nombre")
 	private String nombre;
+	@Columna(nombre = "apellido")
 	private String apellido;
+	@Columna(nombre = "edad")
 	private Integer edad;
 	
 	public Persona() {

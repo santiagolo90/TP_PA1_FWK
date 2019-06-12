@@ -23,25 +23,29 @@ public class main {
 		try {
 
 
-			UConexion UC = UConexion.getInstance();
+			//UConexion UC = UConexion.getInstance();
 			
-			conn = UC.getConexion();
+			//conn = UC.getConexion();
 
 			//ps = conn.prepareStatement("INSERT INTO PERSONAS ( nombre, apellido, edad) VALUES ('Mario','Argento','50' )");
 			//ps.execute();
 			
-			ps = conn.prepareStatement("SELECT * FROM PERSONAS");
-			ResultSet rs = ps.executeQuery();
+			//ps = conn.prepareStatement("SELECT * FROM PERSONAS");
+			//ResultSet rs = ps.executeQuery();
 			//while(rs.next()){
 			//	personas.add(new Persona(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4)));
 			//}
 			//personas.stream().forEach(p -> System.out.println(p));
-			atributos = UBean.obtenerAtributos(p);
-			for(Field f: atributos ){
+			UBean.ejecutarSet(p,"id",85);
+			UBean.ejecutarSet(p,"nombre","Macri");
+			UBean.ejecutarSet(p,"apellido","Gato");
+			UBean.ejecutarSet(p,"edad",5);
+			System.out.println(UBean.ejecutarGet(p, "apellido"));
+			//for(Field f: atributos ){
 				
-				System.out.println("Atributo for: "+f.getName());//solo el atributo
-				System.out.println("tipo for: "+ f.getType());// de que tipo es el atributo
-			}
+			//	System.out.println("Atributo for: "+f.getName());//solo el atributo
+			//	System.out.println("tipo for: "+ f.getType());// de que tipo es el atributo
+			//}
 
 			
 		} catch (Exception e) {
@@ -49,8 +53,8 @@ public class main {
 			e.printStackTrace();
 		} finally {
 			try {;
-				ps.close();
-				conn.close();
+				//ps.close();
+				//conn.close();
 			} catch (Exception e) {
 				// TODO: handle exception
 			}			
