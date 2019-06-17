@@ -4,6 +4,9 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import servicios.Consultas;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +22,7 @@ public class main {
 		ArrayList<Persona> personas = new ArrayList<>();
 		ArrayList<Field> atributos =  new ArrayList<Field>();
 		Persona p = new Persona();
-		
+		Auto a = new Auto();
 		try {
 
 
@@ -37,15 +40,22 @@ public class main {
 			//}
 			//personas.stream().forEach(p -> System.out.println(p));
 			UBean.ejecutarSet(p,"id",85);
-			UBean.ejecutarSet(p,"nombre","Macri");
-			UBean.ejecutarSet(p,"apellido","Gato");
+			UBean.ejecutarSet(p,"nombre","Pepe");
+			UBean.ejecutarSet(p,"apellido","Argento");
 			UBean.ejecutarSet(p,"edad",5);
-			System.out.println(UBean.ejecutarGet(p, "apellido"));
+			
+			UBean.ejecutarSet(a,"id",1);
+			UBean.ejecutarSet(a,"marca","ford");
+			UBean.ejecutarSet(a,"color","negro");
+			//System.out.println(UBean.ejecutarGet(p, "apellido"));
 			//for(Field f: atributos ){
 				
 			//	System.out.println("Atributo for: "+f.getName());//solo el atributo
 			//	System.out.println("tipo for: "+ f.getType());// de que tipo es el atributo
 			//}
+			
+			//Consultas.guardar(p);
+			Consultas.guardar(a);
 
 			
 		} catch (Exception e) {

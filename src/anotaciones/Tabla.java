@@ -9,5 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Tabla {
 
-	public String nombre();
+	public String nombre()
+	default "no";
 }
