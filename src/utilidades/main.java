@@ -39,14 +39,14 @@ public class main {
 			//	personas.add(new Persona(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4)));
 			//}
 			//personas.stream().forEach(p -> System.out.println(p));
-			UBean.ejecutarSet(p,"id",85);
+
 			UBean.ejecutarSet(p,"nombre","Pepe");
 			UBean.ejecutarSet(p,"apellido","Argento");
 			UBean.ejecutarSet(p,"edad",5);
 			
-			UBean.ejecutarSet(a,"id",3);
-			UBean.ejecutarSet(a,"marca","chery");
-			UBean.ejecutarSet(a,"color","amarillo");
+;
+			UBean.ejecutarSet(a,"marca","ford");
+			UBean.ejecutarSet(a,"color","rojo");
 			//System.out.println(UBean.ejecutarGet(p, "apellido"));
 			//for(Field f: atributos ){
 				
@@ -55,10 +55,13 @@ public class main {
 			//}
 			
 			//Consultas.guardar(p);
-			//Consultas.guardar(a);
+			
+			System.out.println("ultimo id:"+ Consultas.guardar(a));
 			//Consultas.modificar(a);
 			//Consultas.eliminar(a);
-			Consultas.obtenerPorId(p.getClass(), 1);
+			//Persona pe = (Persona) Consultas.obtenerPorId(p.getClass(), 1);
+			
+			//System.out.println(pe.toString());
 			
 		} catch (Exception e) {
 			// TODO: handle exception

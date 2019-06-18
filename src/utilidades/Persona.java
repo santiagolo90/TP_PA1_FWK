@@ -5,7 +5,7 @@ import anotaciones.*;
 public class Persona {
 	
 	@Id
-	private Integer id;
+	private Long id;
 	@Columna(nombre = "nombre")
 	private String nombre;
 	@Columna(nombre = "apellido")
@@ -19,7 +19,7 @@ public class Persona {
 	}
 	
 	
-	public Persona(Integer id, String nombre, String apellido, Integer edad) {
+	public Persona(Long id, String nombre, String apellido, Integer edad) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -27,10 +27,10 @@ public class Persona {
 		this.edad = edad;
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getNombre() {

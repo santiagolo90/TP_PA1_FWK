@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.mysql.jdbc.ResultSetMetaData;
@@ -17,7 +18,7 @@ import utilidades.UConexion;
 
 public class Consultas {
 
-	public static Boolean guardar(Object o) throws Exception{
+	public static Object guardar(Object o) throws Exception{
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
@@ -26,6 +27,7 @@ public class Consultas {
 		Tabla t = (Tabla)clase.getAnnotation(Tabla.class);
 		//System.out.println("Clase: "+clase.getSimpleName());
         String tabla = t.nombre().toLowerCase();
+        
         
         Object valores = "";
         if (tabla.isEmpty()) {
@@ -60,10 +62,21 @@ public class Consultas {
 		try {
 			UConexion UC = UConexion.getInstance();
 			conn = UC.getConexion();
-			ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			ps.execute();
 			
-			return Boolean.TRUE;
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				//ultimoId =  rs.getObject(1);
+				for(Field f: atributos ){
+					if (f.getAnnotation(Id.class) != null) {
+
+						UBean.ejecutarSet(o, f.getName(), rs.getObject(1));
+					}
+
+				}
+			}
+			return  o;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -75,7 +88,7 @@ public class Consultas {
 				// TODO: handle exception
 			}			
 		}
-		return Boolean.FALSE;
+		return null;
 	}
 	
 	
@@ -146,18 +159,17 @@ public class Consultas {
 		return result;
 	}
 	
-	public static Boolean  obtenerPorId(Class c, Object id) throws Exception {
+	public static Object  obtenerPorId(Class c, Object id) throws Exception {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
-		Class clase = c;
+		Object o = c.getConstructors()[0].newInstance(null);
 		
-		
-		Field[] atributos = c.getDeclaredFields();
-		Tabla t = (Tabla)clase.getAnnotation(Tabla.class);
+		ArrayList<Field> atributos =  UBean.obtenerAtributos(o);
+		Tabla t = (Tabla)c.getAnnotation(Tabla.class);
         String tabla = t.nombre();
         if (tabla.isEmpty()) {
-        	tabla = clase.getSimpleName().toLowerCase();
+        	tabla = c.getSimpleName().toLowerCase();
         }
         
         String idNombre = "";
@@ -187,7 +199,6 @@ public class Consultas {
 			UConexion UC = UConexion.getInstance();
 			conn = UC.getConexion();
 			ps = conn.prepareStatement(query);
-			String ress ="{";
 			ResultSet rs = ps.executeQuery();
 			
             ResultSetMetaData metadata = (ResultSetMetaData) rs.getMetaData();
@@ -196,21 +207,12 @@ public class Consultas {
 			while(rs.next()){
                 for (int i = 1; i <= cantColumnas; i++) {
                     String colNombre = metadata.getColumnName(i);
-                    UBean.ejecutarSet(c, colNombre, rs.getObject(i));
-                    ress = ress + '"';
-                    ress = ress + colNombre + '"' + ":";
-                    ress = ress + '"' + String.valueOf(rs.getObject(i))+ '"';
-                    ress = ress.concat(",");
+                    UBean.ejecutarSet(o, colNombre, rs.getObject(i));
                    
                 }
 			}
-			if(ress.endsWith(",")){
-				ress = ress.substring(0,ress.length() - 1);
-			}
-			ress = ress.concat("}");
-			System.out.println(ress);
 			
-			return Boolean.TRUE;
+			return o;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

@@ -8,7 +8,7 @@ import anotaciones.Tabla;
 public class Auto {
 	
 	@Id
-	private Integer id;
+	private Long id;
 	
 	@Columna(nombre = "marca")
 	private String marca;
@@ -20,11 +20,11 @@ public class Auto {
 		super();
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
