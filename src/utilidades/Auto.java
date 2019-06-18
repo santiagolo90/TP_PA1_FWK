@@ -43,6 +43,12 @@ public class Auto {
 	public void setColor(String color) {
 		this.color = color;
 	}
+
+	@Override
+	public String toString() {
+		return "Auto [id=" + id + ", marca=" + marca + ", color=" + color + "]";
+	}
+	
 	
 	
 	
