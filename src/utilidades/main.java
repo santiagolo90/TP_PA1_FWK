@@ -44,9 +44,9 @@ public class main {
 			UBean.ejecutarSet(p,"apellido","Argento");
 			UBean.ejecutarSet(p,"edad",5);
 			
-			UBean.ejecutarSet(a,"id",1);
-			UBean.ejecutarSet(a,"marca","ford");
-			UBean.ejecutarSet(a,"color","negro");
+			UBean.ejecutarSet(a,"id",2);
+			UBean.ejecutarSet(a,"marca","seat");
+			UBean.ejecutarSet(a,"color","verde");
 			//System.out.println(UBean.ejecutarGet(p, "apellido"));
 			//for(Field f: atributos ){
 				
@@ -55,7 +55,8 @@ public class main {
 			//}
 			
 			//Consultas.guardar(p);
-			Consultas.guardar(a);
+			//Consultas.guardar(a);
+			Consultas.modificar(a);
 
 			
 		} catch (Exception e) {

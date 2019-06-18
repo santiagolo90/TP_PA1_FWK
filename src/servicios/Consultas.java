@@ -73,4 +73,65 @@ public class Consultas {
 		}
 		return Boolean.FALSE;
 	}
+	
+	
+	public static Boolean modificar(Object o) throws Exception {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		//UPDATE `auto` SET marca="audi" WHERE id=1
+		Class clase = o.getClass();
+		ArrayList<Field> atributos =  UBean.obtenerAtributos(o);
+		Tabla t = (Tabla)clase.getAnnotation(Tabla.class);
+        String tabla = t.nombre();
+        if (tabla.isEmpty()) {
+        	tabla = clase.getSimpleName().toLowerCase();
+        }
+		String query = "UPDATE " .concat(tabla).concat(" SET ");
+        String id ="";
+        
+		for(Field f: atributos ){
+			//if (!f.getName().equals("id")) {}
+			if (f.getAnnotation(Id.class) == null) {
+				query = query.concat(f.getAnnotation(Columna.class).nombre()).concat("=");
+				query = query.concat("'");
+				query = query.concat(String.valueOf(UBean.ejecutarGet(o, f.getAnnotation(Columna.class).nombre())));
+				query = query.concat("',");
+			}else {
+				if(id.isEmpty()) {
+
+					id = String.valueOf(UBean.ejecutarGet(o, f.getName()));
+					
+				}
+				
+			}
+
+		}
+		if(query.endsWith(",")){
+			query = query.substring(0,query.length() - 1);
+		}
+		query = query.concat(" WHERE id=").concat(id);
+		//System.out.println("query: "+query);
+		
+		
+		try {
+			UConexion UC = UConexion.getInstance();
+			conn = UC.getConexion();
+			ps = conn.prepareStatement(query);
+			ps.execute();
+			
+			return Boolean.TRUE;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {;
+				ps.close();
+				conn.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}			
+		}
+	
+		return Boolean.FALSE;
+	}
 }
