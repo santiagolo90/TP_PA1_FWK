@@ -58,7 +58,7 @@ public class main {
 			//Consultas.guardar(a);
 			//Consultas.modificar(a);
 			//Consultas.eliminar(a);
-			Consultas.obtenerPorId(a.getClass(), 1);
+			Consultas.obtenerPorId(p.getClass(), 1);
 			
 		} catch (Exception e) {
 			// TODO: handle exception

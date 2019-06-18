@@ -187,6 +187,7 @@ public class Consultas {
 			UConexion UC = UConexion.getInstance();
 			conn = UC.getConexion();
 			ps = conn.prepareStatement(query);
+			String ress ="{";
 			ResultSet rs = ps.executeQuery();
 			
             ResultSetMetaData metadata = (ResultSetMetaData) rs.getMetaData();
@@ -196,9 +197,18 @@ public class Consultas {
                 for (int i = 1; i <= cantColumnas; i++) {
                     String colNombre = metadata.getColumnName(i);
                     UBean.ejecutarSet(c, colNombre, rs.getObject(i));
-                    System.out.println(rs.getObject(i));
+                    ress = ress + '"';
+                    ress = ress + colNombre + '"' + ":";
+                    ress = ress + '"' + String.valueOf(rs.getObject(i))+ '"';
+                    ress = ress.concat(",");
+                   
                 }
 			}
+			if(ress.endsWith(",")){
+				ress = ress.substring(0,ress.length() - 1);
+			}
+			ress = ress.concat("}");
+			System.out.println(ress);
 			
 			return Boolean.TRUE;
 		} catch (Exception e) {
