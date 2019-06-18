@@ -76,9 +76,7 @@ public class Consultas {
 	
 	
 	public static Boolean modificar(Object o) throws Exception {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		//UPDATE `auto` SET marca="audi" WHERE id=1
+		Boolean result = Boolean.FALSE;
 		Class clase = o.getClass();
 		ArrayList<Field> atributos =  UBean.obtenerAtributos(o);
 		Tabla t = (Tabla)clase.getAnnotation(Tabla.class);
@@ -111,8 +109,43 @@ public class Consultas {
 		}
 		query = query.concat(" WHERE id=").concat(id);
 		//System.out.println("query: "+query);
+		result = ejecutarQuery(query);
 		
-		
+		return result;
+	}
+	
+	public static Boolean eliminar(Object o) throws Exception {
+		//DELETE FROM `auto` WHERE 0
+		Boolean result = Boolean.FALSE;
+		Class clase = o.getClass();
+		ArrayList<Field> atributos =  UBean.obtenerAtributos(o);
+		Tabla t = (Tabla)clase.getAnnotation(Tabla.class);
+        String tabla = t.nombre();
+        if (tabla.isEmpty()) {
+        	tabla = clase.getSimpleName().toLowerCase();
+        }
+		String query = "DELETE FROM " .concat(tabla);
+        String id ="";
+        
+		for(Field f: atributos ){
+			//if (!f.getName().equals("id")) {}
+			if (f.getAnnotation(Id.class) != null) {
+				if(id.isEmpty()) {
+					id = String.valueOf(UBean.ejecutarGet(o, f.getName()));
+				}
+			}
+
+		}
+		query = query.concat(" WHERE id=").concat(id);
+        //System.out.println("tabla: "+query);
+		result = ejecutarQuery(query);
+		return result;
+	}
+	
+	
+	private static Boolean ejecutarQuery(String query) {
+		Connection conn = null;
+		PreparedStatement ps = null;
 		try {
 			UConexion UC = UConexion.getInstance();
 			conn = UC.getConexion();
@@ -131,7 +164,8 @@ public class Consultas {
 				// TODO: handle exception
 			}			
 		}
-	
+		
 		return Boolean.FALSE;
 	}
+	
 }

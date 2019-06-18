@@ -44,9 +44,9 @@ public class main {
 			UBean.ejecutarSet(p,"apellido","Argento");
 			UBean.ejecutarSet(p,"edad",5);
 			
-			UBean.ejecutarSet(a,"id",2);
-			UBean.ejecutarSet(a,"marca","seat");
-			UBean.ejecutarSet(a,"color","verde");
+			UBean.ejecutarSet(a,"id",3);
+			UBean.ejecutarSet(a,"marca","chery");
+			UBean.ejecutarSet(a,"color","amarillo");
 			//System.out.println(UBean.ejecutarGet(p, "apellido"));
 			//for(Field f: atributos ){
 				
@@ -56,8 +56,8 @@ public class main {
 			
 			//Consultas.guardar(p);
 			//Consultas.guardar(a);
-			Consultas.modificar(a);
-
+			//Consultas.modificar(a);
+			Consultas.eliminar(a);
 			
 		} catch (Exception e) {
 			// TODO: handle exception
